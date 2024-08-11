@@ -105,9 +105,12 @@ public class StorePage extends BasePage {
     }
 
 
-    public void viewCart()
+    public CartPage viewCart()
     {
         viewCartButton.click();
+        CartPage cartPage =new CartPage(driver);
+        return cartPage;
+
     }
 
 

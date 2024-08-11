@@ -1,5 +1,6 @@
 package EcommerceWeb.BasePage;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -24,6 +25,21 @@ public class BasePage {
     {
         WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.elementToBeClickable((element)));
+    }
+    public void waitForElementToBeVisible(By locator)
+    {
+        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    public void waitForElementToBeClickable(By locator)
+    {
+        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    public void waitForElementToBeLocated(By locator)
+    {
+        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
 }

@@ -1,13 +1,18 @@
 package EcommerceWeb.Pages;
 
 import EcommerceWeb.BasePage.BasePage;
+import EcommerceWeb.Objects.BillingInfo;
+import org.checkerframework.checker.units.qual.C;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 
 public class CheckoutPage extends BasePage {
     WebDriver driver;
@@ -32,41 +37,57 @@ public class CheckoutPage extends BasePage {
     WebElement emailInput;
     @FindBy(xpath = "//button[@name='woocommerce_checkout_place_order']")
     WebElement placeOrderBtn;
+    @FindBy(xpath = "//span[@id='select2-billing_country-container']")
+    WebElement countryInput;
+    @FindBy(xpath = "//span[@id='select2-billing_state-container']")
+    WebElement stateInput;
 
-    public void fillDetails(HashMap<String,String> billingDetails)
+
+    List<WebElement> countriesList;
+    List<WebElement> stateList;
+
+    public void fillDetails(BillingInfo billingDetails)
     {
-        firstNameInput.sendKeys(billingDetails.get("First Name"));
-        lastNameInput.sendKeys(billingDetails.get("Last Name"));
-        addressInput.sendKeys(billingDetails.get("Address"));
-        cityInput.sendKeys(billingDetails.get("City"));
-        postCodeInput.sendKeys(billingDetails.get("Pincode"));
-        emailInput.sendKeys(billingDetails.get("Email"));
-        //        Actions action=new Actions(driver);
-//        action.click(driver.findElement(By.xpath("//span[@id='select2-billing_country-container']"))).
-//               click(driver.findElement(By.xpath("//input[@class='select2-search__field']"))).
-//                sendKeys(billingDetails.get("Country")).build().perform();
-//
-//        countriesList=driver.findElements(By.cssSelector(".select2-results__option"));
-//        countriesList.stream().
-//                filter(country->country.getText().equalsIgnoreCase(billingDetails.get("Country"))).
-//                limit(1).
-//                forEach(countryEle-> countryEle.click());
+            firstNameInput.sendKeys(billingDetails.getFirstName());
+            lastNameInput.sendKeys(billingDetails.getLastName());
+            addressInput.sendKeys(billingDetails.getAddress());
+            cityInput.sendKeys(billingDetails.getCity());
+            postCodeInput.sendKeys(billingDetails.getPostCode());
+            emailInput.sendKeys(billingDetails.getEmail());
+            Actions action=new Actions(driver);
+            action.click(countryInput).build().perform();
 
- //       Actions action1=new Actions(driver);
-//        action1.click(driver.findElement(By.xpath("//span[@class='select2 select2-container select2-container--default select2-container--below select2-container--focus']"))).
-//                click(driver.findElement(By.cssSelector(".select2-search__field"))).
-//                sendKeys(billingDetails.get("City")).build().perform();
-//
-//        stateList=driver.findElements(By.cssSelector(".select2-results__option"));
-//        stateList.stream().
-//                filter(state->state.getText().equalsIgnoreCase(billingDetails.get("City"))).
-//                limit(1).
-//                forEach(stateEle-> stateEle.click());
+           waitForElementToBeLocated(By.cssSelector(".select2-search__field"));
+
+            action.click(driver.findElement(By.xpath("//input[@class='select2-search__field']"))).
+                    sendKeys(billingDetails.getCountry()).build().perform();
+
+            countriesList=driver.findElements(By.cssSelector(".select2-results__option"));
+            countriesList.stream().
+                    filter(country->country.getText().equalsIgnoreCase(billingDetails.getCountry())).
+                    limit(1).
+                    forEach(countryEle-> countryEle.click());
+
+            Actions action1=new Actions(driver);
+            action1.click(stateInput).build().perform();
+
+            waitForElementToBeLocated(By.cssSelector(".select2-search__field"));
+
+            action1.click(driver.findElement(By.cssSelector(".select2-search__field"))).
+                    sendKeys(billingDetails.getState()).build().perform();
+
+            stateList=driver.findElements(By.cssSelector(".select2-results__option"));
+            stateList.stream().
+                    filter(state->state.getText().equalsIgnoreCase(billingDetails.getState())).
+                    limit(1).
+                    forEach(stateEle-> stateEle.click());
 
     }
-    public void placeOrder() throws InterruptedException {
+    public ConfirmPage placeOrder() throws InterruptedException {
+        Thread.sleep(Duration.ofSeconds(1));
         placeOrderBtn.click();
-        Thread.sleep(Duration.ofSeconds(2));
+        ConfirmPage confirmPage=new ConfirmPage(driver);
+        return confirmPage;
     }
 
 }

@@ -24,8 +24,10 @@ public class LandingPage extends BasePage {
     @FindBy(xpath = "//a[normalize-space()='Find More']")
     WebElement find;
 
-    public void enterStore()
+    public StorePage enterStore()
     {
         shop.click();
+        StorePage storePage=new StorePage(driver);
+        return storePage;
     }
 }

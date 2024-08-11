@@ -42,9 +42,11 @@ public class CartPage extends BasePage {
                 toList();
         return cartProductQuantity.equals(quantityListInOrder);
     }
-    public void goToCheckout()
+    public CheckoutPage goToCheckout()
     {
         checkoutBtn.click();
+        CheckoutPage checkoutPage=new CheckoutPage(driver);
+        return checkoutPage;
     }
 
 
