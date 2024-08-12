@@ -42,6 +42,9 @@ public class CheckoutPage extends BasePage {
     @FindBy(xpath = "//span[@id='select2-billing_state-container']")
     WebElement stateInput;
 
+    //Before submit button
+    By overlay= By.xpath("//div[@class='blockUI blockOverlay']");
+
 
     List<WebElement> countriesList;
     List<WebElement> stateList;
@@ -84,7 +87,7 @@ public class CheckoutPage extends BasePage {
 
     }
     public ConfirmPage placeOrder() throws InterruptedException {
-        Thread.sleep(Duration.ofSeconds(1));
+       waitForElementsListToBeInvisible(overlay);
         placeOrderBtn.click();
         ConfirmPage confirmPage=new ConfirmPage(driver);
         return confirmPage;

@@ -7,10 +7,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class BasePage {
     //Generic function-> Wait,switches,alert
-    //only initalized using PageClasses(childs), So using super(s) as this class also needs driver
+    //only initalized using PageClasses(childs), So using super(s) in them as this class also needs driver
     WebDriver driver;
     public BasePage(WebDriver driver)
     {
@@ -40,6 +41,17 @@ public class BasePage {
     {
         WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(3));
         wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+    public void waitForElementToBeInvisible(By locator)
+    {
+        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+    public void waitForElementsListToBeInvisible(By locator)
+    {
+        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(3));
+        List<WebElement> dummyElements=driver.findElements(locator);
+        wait.until(ExpectedConditions.invisibilityOfAllElements(dummyElements));
     }
 
 }

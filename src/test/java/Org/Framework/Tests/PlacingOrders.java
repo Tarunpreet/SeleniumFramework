@@ -4,17 +4,11 @@ import EcommerceWeb.Objects.BillingInfo;
 import EcommerceWeb.Pages.*;
 import Org.Framework.Base.BaseTest;
 import Org.Framework.Utils.JsonUtil;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PlacingOrders extends BaseTest {
 
@@ -54,7 +48,7 @@ public class PlacingOrders extends BaseTest {
 
 
         //HashMap<String,String> billingDetails=getBillingData();
-        BillingInfo billingDetails= JsonUtil.deserialization("BillingData",BillingInfo.class);
+        BillingInfo billingDetails= JsonUtil.deserializationToClass("BillingData",BillingInfo.class);
 
         checkoutPage.fillDetails(billingDetails);
         ConfirmPage confirmPage=checkoutPage.placeOrder();
