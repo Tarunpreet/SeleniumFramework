@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.List;
 
-public class PlacingOrders extends BaseTest {
+public class PlacingOrdersTest extends BaseTest {
 
 
 
@@ -32,7 +32,7 @@ public class PlacingOrders extends BaseTest {
 
 
     @Test(dataProvider = "productDP")
-    public void guestOrderPlacement(List<String> productNameList,List<Integer> quantityList) throws InterruptedException {
+    public void guestOrderPlacementTest(List<String> productNameList, List<Integer> quantityList) throws InterruptedException {
 
         LandingPage landingPage=startApplication();
         StorePage storePage=landingPage.enterStore();
@@ -56,5 +56,6 @@ public class PlacingOrders extends BaseTest {
 
 
     }
+
 
 }
