@@ -23,6 +23,11 @@ public class LandingPage extends BasePage {
     @FindBy(xpath = "//a[normalize-space()='Find More']")
     WebElement find;
 
+    public void startApplication()
+    {
+        driver.get("https://askomdch.com/");
+    }
+
     public StorePage enterStore()
     {
         shop.click();

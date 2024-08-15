@@ -34,7 +34,8 @@ public class PlacingOrdersTest extends BaseTest {
     @Test(dataProvider = "productDP")
     public void guestOrderPlacementTest(List<String> productNameList, List<Integer> quantityList) throws InterruptedException {
 
-        LandingPage landingPage=startApplication();
+        LandingPage landingPage=new LandingPage(driver);
+        landingPage.startApplication();
         StorePage storePage=landingPage.enterStore();
 
         storePage.searchProduct("b");
