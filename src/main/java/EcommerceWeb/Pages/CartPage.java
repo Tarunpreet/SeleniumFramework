@@ -45,6 +45,10 @@ public class CartPage extends BasePage {
         CheckoutPage checkoutPage=new CheckoutPage(driver);
         return checkoutPage;
     }
+    public void load()
+    {
+        super.load("cart/");
+    }
 
 
 }

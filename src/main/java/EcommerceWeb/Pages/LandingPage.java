@@ -23,10 +23,7 @@ public class LandingPage extends BasePage {
     @FindBy(xpath = "//a[normalize-space()='Find More']")
     WebElement find;
 
-    public void startApplication()
-    {
-        driver.get("https://askomdch.com/");
-    }
+
 
     public StorePage enterStore()
     {
@@ -34,4 +31,33 @@ public class LandingPage extends BasePage {
         StorePage storePage=new StorePage(driver);
         return storePage;
     }
+    public  StorePage enterStoreFromHeader()
+    {
+        storeHeader.click();
+        StorePage storePage=new StorePage(driver);
+        return storePage;
+    }
+    public  StorePage enterMenStoreFromHeader()
+    {
+        menHeader.click();
+        StorePage storePage=new StorePage(driver);
+        return storePage;
+    }
+    public  StorePage enterWomenStoreFromHeader()
+    {
+        womenHeader.click();
+        StorePage storePage=new StorePage(driver);
+        return storePage;
+    }
+    public  StorePage enterAccessoriesFromHeader()
+    {
+        accessoriesHeader.click();
+        StorePage storePage=new StorePage(driver);
+        return storePage;
+    }
+//    public  StorePage enterContactFromHeader()
+//    {
+//        accessoriesHeader.click();
+//
+//    }
 }

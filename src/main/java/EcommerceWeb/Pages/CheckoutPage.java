@@ -89,4 +89,9 @@ public class CheckoutPage extends BasePage {
         return confirmPage;
     }
 
+    public void load()
+    {
+        super.load("checkout/");
+    }
+
 }

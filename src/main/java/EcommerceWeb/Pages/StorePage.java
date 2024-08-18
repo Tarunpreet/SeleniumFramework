@@ -5,13 +5,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 public class StorePage extends BasePage {
     WebDriver driver;
+
+    @FindBy(xpath = "//h1[@class='woocommerce-products-header__title page-title']")
+    WebElement searchTitle;
 
     @FindBy(xpath="//input[@id='woocommerce-product-search-field-0']")
     WebElement searchFeild;
@@ -27,6 +36,9 @@ public class StorePage extends BasePage {
 
     @FindBy(xpath="//a[@class='next page-numbers']")
     WebElement nextPageButton;
+
+    @FindBy(css = ".orderby")
+    WebElement filterButton;
 
     List<WebElement> cartElementList=new ArrayList<>();
 
@@ -53,7 +65,7 @@ public class StorePage extends BasePage {
             cartElementList=productNamesEleList.stream().
                     filter(product -> productNameList.contains(product.getText())).
                     map(product -> giveAddToCartEle(product)).
-                    collect(Collectors.toList());
+                    collect(toList());
 
             productNamesEleList.stream().
                     filter(product -> productNameList.contains(product.getText())).
@@ -111,6 +123,65 @@ public class StorePage extends BasePage {
         return cartPage;
 
     }
+    public String getSearchTitle()
+    {
+        return searchTitle.getText();
+    }
+    public void load()
+    {
+        super.load("store/");
+    }
+    public void load(String searchItem)
+    {
+        super.load("?s="+searchItem+"&post_type=product");
+    }
+
+    public void selectFilterOption(String option)
+    {
+        filterButton.click();
+        selectValue(filterButton,option);
+
+    }
+    //All prices enabled or disabled(Discount)
+   By allPrices=By.xpath("//span[@class='price'] //span[@class='woocommerce-Price-amount amount']");
+
+    public Boolean testPrices(Boolean ascending)
+    {
+        List<WebElement> allPricesElements=driver.findElements(allPrices);
+        List<Double> prices=allPricesElements.stream().filter(ele->checkEnabled(ele)).map(ele->mapToPrice(ele)).toList();
+        for(Double price:prices)
+        {
+            System.out.println(price);
+        }
+        List<Double> sortedPrices;
+        if(ascending)
+        {
+            sortedPrices=prices.stream().sorted().toList();
+            return prices.equals(sortedPrices);
+        }
+       sortedPrices=prices.stream().sorted(Collections.reverseOrder()).toList();
+        return prices.equals(sortedPrices);
+
+    }
+    public Boolean checkEnabled(WebElement priceEle)
+    {
+        try {
+            WebElement temp = priceEle.findElement(By.xpath("parent::del"));
+
+        }
+       catch (Exception e)
+       {
+           return true;
+       }
+        return false;
+    }
+    public Double mapToPrice(WebElement priceEle)
+    {
+        WebElement temp=priceEle.findElement(By.xpath("bdi"));
+        String price[]=temp.getText().split("\\$");
+        return Double.parseDouble(price[1]);
+    }
+
 
 
 

@@ -1,4 +1,4 @@
-package Org.Framework.Tests;
+package Org.Framework.Tests.EndToEnd;
 
 import EcommerceWeb.Objects.BillingInfo;
 import EcommerceWeb.Pages.*;

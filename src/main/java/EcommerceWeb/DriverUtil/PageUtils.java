@@ -4,12 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 
 public class PageUtils {
+    //Generic function-> Wait,switches,alert
     protected WebDriver driver;
 
     public PageUtils(WebDriver driver)
@@ -53,4 +55,16 @@ public class PageUtils {
         List<WebElement> dummyElements=driver.findElements(locator);
         wait.until(ExpectedConditions.invisibilityOfAllElements(dummyElements));
     }
+    protected void selectValue(WebElement filterBtn,String option)
+    {
+        Select select=new Select(filterBtn);
+        select.selectByValue(option);
+    }
+    protected void selectIndex(WebElement filterBtn,int index)
+    {
+        Select select=new Select(filterBtn);
+        select.selectByIndex(index);
+    }
+
+
 }
